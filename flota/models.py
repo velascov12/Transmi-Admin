@@ -13,13 +13,6 @@ class TipoBus(models.Model):
 
 
 class Bus(models.Model):
-    ESTADO_CHOICES = [
-        ('activo', 'Activo'),
-        ('fuera_servicio', 'Fuera de Servicio'),
-        ('mantenimiento', 'En Mantenimiento'),
-        ('baja', 'Dado de Baja'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     placa = models.CharField(max_length=10, unique=True)
     numero_interno = models.CharField(max_length=10, unique=True)
@@ -28,7 +21,7 @@ class Bus(models.Model):
     modelo = models.CharField(max_length=50)
     anio_fabricacion = models.IntegerField()
     kilometraje = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='activo')
+    estado = models.CharField(max_length=20)
     fecha_ingreso = models.DateField()
 
     def __str__(self):
@@ -36,18 +29,12 @@ class Bus(models.Model):
 
 
 class Conductor(models.Model):
-    TURNO_CHOICES = [
-        ('manana', 'Mañana'),
-        ('tarde', 'Tarde'),
-        ('noche', 'Noche'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     cedula = models.CharField(max_length=15, unique=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     licencia = models.CharField(max_length=20, unique=True)
-    turno = models.CharField(max_length=10, choices=TURNO_CHOICES)
+    turno = models.CharField(max_length=10)
     bus_asignado = models.OneToOneField(Bus, on_delete=models.SET_NULL, null=True, blank=True)
     activo = models.BooleanField(default=True)
     fecha_contratacion = models.DateField()

@@ -3,15 +3,9 @@ from django.db import models
 
 
 class TipoMantenimiento(models.Model):
-    CATEGORIA_CHOICES = [
-        ('preventivo', 'Preventivo'),
-        ('correctivo', 'Correctivo'),
-        ('predictivo', 'Predictivo'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nombre = models.CharField(max_length=100)
-    categoria = models.CharField(max_length=15, choices=CATEGORIA_CHOICES)
+    categoria = models.CharField(max_length=15)
     descripcion = models.TextField()
     duracion_estimada_horas = models.IntegerField()
     periodicidad_km = models.IntegerField(null=True, blank=True)
@@ -21,13 +15,6 @@ class TipoMantenimiento(models.Model):
 
 
 class OrdenMantenimiento(models.Model):
-    ESTADO_CHOICES = [
-        ('programado', 'Programado'),
-        ('en_ejecucion', 'En Ejecución'),
-        ('completado', 'Completado'),
-        ('cancelado', 'Cancelado'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     numero_orden = models.CharField(max_length=20, unique=True)
     placa_bus = models.CharField(max_length=10)
@@ -37,7 +24,7 @@ class OrdenMantenimiento(models.Model):
     fecha_inicio = models.DateTimeField(null=True, blank=True)
     fecha_fin = models.DateTimeField(null=True, blank=True)
     kilometraje_bus = models.DecimalField(max_digits=10, decimal_places=2)
-    estado = models.CharField(max_length=15, choices=ESTADO_CHOICES, default='programado')
+    estado = models.CharField(max_length=15)
     observaciones = models.TextField(blank=True)
 
     def __str__(self):
@@ -65,4 +52,4 @@ class DetalleMantenimiento(models.Model):
     precio_unitario_momento = models.DecimalField(max_digits=12, decimal_places=2)
 
     def __str__(self):
-        return f"{self.repuesto.nombre} x{self.cantidad_usada} - OM {self.orden.numero_orden}"
+        return f"{self.repuesto.nombre} x{self.cantidad_usada} - OM {self.orden.numero_orden}"                                      

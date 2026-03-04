@@ -13,20 +13,13 @@ class TipoTarjeta(models.Model):
 
 
 class UsuarioTullave(models.Model):
-    ESTADO_CHOICES = [
-        ('activa', 'Activa'),
-        ('bloqueada', 'Bloqueada'),
-        ('vencida', 'Vencida'),
-        ('cancelada', 'Cancelada'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     numero_tarjeta = models.CharField(max_length=20, unique=True)
     tipo_tarjeta = models.ForeignKey(TipoTarjeta, on_delete=models.PROTECT, related_name='usuarios')
     nombre_titular = models.CharField(max_length=100)
     cedula_titular = models.CharField(max_length=15, unique=True)
     saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    estado = models.CharField(max_length=15, choices=ESTADO_CHOICES, default='activa')
+    estado = models.CharField(max_length=15)
     fecha_expedicion = models.DateField()
     fecha_vencimiento = models.DateField(null=True, blank=True)
 
@@ -35,17 +28,10 @@ class UsuarioTullave(models.Model):
 
 
 class RecargaTarjeta(models.Model):
-    MEDIO_PAGO_CHOICES = [
-        ('efectivo', 'Efectivo'),
-        ('debito', 'Tarjeta Débito'),
-        ('credito', 'Tarjeta Crédito'),
-        ('pse', 'PSE'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tarjeta = models.ForeignKey(UsuarioTullave, on_delete=models.CASCADE, related_name='recargas')
     monto = models.DecimalField(max_digits=10, decimal_places=2)
-    medio_pago = models.CharField(max_length=15, choices=MEDIO_PAGO_CHOICES)
+    medio_pago = models.CharField(max_length=15)
     fecha_recarga = models.DateTimeField(auto_now_add=True)
     saldo_anterior = models.DecimalField(max_digits=10, decimal_places=2)
     saldo_posterior = models.DecimalField(max_digits=10, decimal_places=2)
