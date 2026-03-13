@@ -7,13 +7,13 @@ def home(request):
         <title>estaciones home</title>
     </head>
     <body>
-        <div class="nav">
+        <div>
             <a href="/estaciones/">home</a>
             <a href="/estaciones/lista">lista</a>
             <a href="/estaciones/crear">crear</a>
         </div>
         <h1>estaciones</h1>
-        <div class="card">
+        <div>
             <h2>gestion de estaciones</h2>
             <p>administra las estaciones del sistema transmi</p>
         </div>

@@ -7,13 +7,13 @@ def home(request):
         <title>rutas home</title>
     </head>
     <body>
-        <div class="nav">
+        <div>
             <a href="/rutas/">home</a>
             <a href="/rutas/lista">lista</a>
             <a href="/rutas/crear">crear</a>
         </div>
         <h1>rutas</h1>
-        <div class="card">
+        <div>
             <h2>gestion de rutas</h2>
             <p>administra las rutas del sistema transmi</p>
         </div>
