@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Recargar{% endblock %}
+{% block content %}
+<h4 class="mb-3">Recargar tarjeta — {{ usuario.nombre_titular }}</h4>
+<p class="text-muted">Saldo actual: <strong>${{ usuario.saldo|floatformat:0 }}</strong></p>
+
+<div class="card" style="max-width: 400px;">
+  <div class="card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}<div class="text-danger small">{{ field.errors.0 }}</div>{% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-success">Recargar</button>
+      <a href="{% url 'usuarios:lista_usuarios' %}" class="btn btn-outline-secondary ms-2">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

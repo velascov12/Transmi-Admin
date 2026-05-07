@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Error del servidor (500){% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+  <i class="bi bi-exclamation-octagon-fill text-danger" style="font-size: 5rem;"></i>
+  <h1 class="display-1 fw-bold text-danger">500</h1>
+  <h2 class="mb-3">Error interno del servidor</h2>
+  <p class="text-muted mb-4">Ocurrió un error inesperado. Por favor intenta de nuevo.</p>
+  <a href="{% url 'flota:lista_buses' %}" class="btn btn-danger">
+    <i class="bi bi-house me-2"></i> Volver al inicio
+  </a>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'rutas:lista_rutas' %}">Rutas</a></li>
+    <li class="breadcrumb-item active">{{ ruta.codigo }}</li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h2 class="h4 mb-0">
+    <i class="bi bi-map me-2 text-danger"></i>Ruta {{ ruta.codigo }}
+    {% if ruta.activa %}<span class="badge bg-success ms-2">Activa</span>
+    {% else %}<span class="badge bg-secondary ms-2">Inactiva</span>{% endif %}
+  </h2>
+  <div class="d-flex gap-2">
+    <a href="{% url 'rutas:editar_ruta' ruta.pk %}" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-pencil me-1"></i>Editar
+    </a>
+    <a href="{% url 'rutas:eliminar_ruta' ruta.pk %}" class="btn btn-outline-danger btn-sm">
+      <i class="bi bi-trash me-1"></i>Eliminar
+    </a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-7">
+    <div class="card shadow-sm">
+      <div class="card-header"><h6 class="mb-0">Información de la Ruta</h6></div>
+      <div class="card-body">
+        <table class="table table-sm table-borderless mb-0">
+          <tr><th class="text-muted" style="width:35%">Código</th><td><strong class="text-danger fs-5">{{ ruta.codigo }}</strong></td></tr>
+          <tr><th class="text-muted">Nombre</th><td>{{ ruta.nombre }}</td></tr>
+          <tr><th class="text-muted">Tipo</th><td>{{ ruta.get_tipo_display }}</td></tr>
+          <tr><th class="text-muted">Origen</th><td>{{ ruta.portal_origen }}</td></tr>
+          <tr><th class="text-muted">Destino</th><td>{{ ruta.portal_destino }}</td></tr>
+          <tr><th class="text-muted">Distancia</th><td>{{ ruta.distancia_km }} km</td></tr>
+          <tr><th class="text-muted">Tiempo estimado</th><td>{{ ruta.tiempo_estimado_min }} min</td></tr>
+          <tr><th class="text-muted">Frecuencia</th><td>Cada {{ ruta.frecuencia_min }} min</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Horarios</h6>
+        <a href="{% url 'rutas:agregar_horario' ruta.pk %}" class="btn btn-sm btn-danger">
+          <i class="bi bi-plus"></i> Agregar
+        </a>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+          <thead class="table-light">
+            <tr><th>Días</th><th>Inicio</th><th>Fin</th><th></th></tr>
+          </thead>
+          <tbody>
+            {% for h in horarios %}
+            <tr>
+              <td><span class="badge bg-secondary">{{ h.get_dias_display }}</span></td>
+              <td>{{ h.hora_inicio|time:"H:i" }}</td>
+              <td>{{ h.hora_fin|time:"H:i" }}</td>
+              <td>
+                <form method="post" action="{% url 'rutas:eliminar_horario' h.pk %}" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-1" title="Eliminar">
+                    <i class="bi bi-x"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-center text-muted py-2">Sin horarios definidos.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

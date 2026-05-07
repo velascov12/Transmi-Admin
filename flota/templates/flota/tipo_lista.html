@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'flota:dashboard' %}">Flota</a></li>
+    <li class="breadcrumb-item active">Tipos de Bus</li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h2 class="h4 mb-0"><i class="bi bi-grid me-2 text-danger"></i>{{ titulo }}</h2>
+  <a href="{% url 'flota:crear_tipo' %}" class="btn btn-danger">
+    <i class="bi bi-plus-circle me-1"></i> Nuevo Tipo
+  </a>
+</div>
+
+<div class="row g-3">
+  {% for tipo in tipos %}
+  <div class="col-md-4">
+    <div class="card stat-card shadow-sm h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <h5 class="card-title">{{ tipo.nombre }}</h5>
+          <span class="badge bg-danger">{{ tipo.num_buses }} bus{{ tipo.num_buses|pluralize:"es" }}</span>
+        </div>
+        <p class="text-muted mb-1"><i class="bi bi-people me-1"></i>{{ tipo.capacidad_pasajeros }} pasajeros</p>
+        <p class="text-muted mb-2"><i class="bi bi-arrows-expand me-1"></i>{{ tipo.longitud_metros }} m</p>
+        {% if tipo.descripcion %}<p class="small text-muted">{{ tipo.descripcion }}</p>{% endif %}
+        <div class="d-flex gap-2 mt-3">
+          <a href="{% url 'flota:editar_tipo' tipo.pk %}" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-pencil me-1"></i>Editar
+          </a>
+          <a href="{% url 'flota:eliminar_tipo' tipo.pk %}" class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash me-1"></i>Eliminar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="text-center py-5 text-muted">
+      <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+      No hay tipos de bus registrados.
+      <div class="mt-3">
+        <a href="{% url 'flota:crear_tipo' %}" class="btn btn-danger">Crear primero</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

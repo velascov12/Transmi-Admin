@@ -1,0 +1,117 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas Sistema</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #d32f2f;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .menu {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .menu a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .ruta-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ruta-inactiva {
+            background-color: #ffebee;
+        }
+
+        .codigo {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .trayecto {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .estado {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: white;
+            font-weight: bold;
+        }
+
+        .estado.activa {
+            background-color: #4caf50;
+        }
+
+        .estado.inactiva {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="menu">
+            <a href="/rutas/">Home</a>
+            <a href="/rutas/lista">Lista</a>
+            <a href="/rutas/crear">Crear</a>
+        </div>
+
+        <h1>Rutas Transmi</h1>
+
+        {% if rutas %}
+        {% for ruta in rutas %}
+        <div class="ruta-card {% if ruta.activa %}ruta-activa{% else %}ruta-inactiva{% endif %}">
+            <div>
+                <span class="codigo">{{ ruta.codigo }}</span>
+                <div class="trayecto">{{ ruta.origen }} - {{ ruta.destino }}</div>
+            </div>
+            <div>
+                {% if ruta.activa %}
+                <span class="estado activa">En operacion</span>
+                {% else %}
+                <span class="estado inactiva">Suspendida</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No hay rutas disponibles para mostrar.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

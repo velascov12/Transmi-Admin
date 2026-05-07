@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'flota:dashboard' %}">Flota</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'flota:lista_conductores' %}">Conductores</a></li>
+    <li class="breadcrumb-item active">{{ conductor.nombre_completo }}</li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+  <h2 class="h4 mb-0">
+    <i class="bi bi-person-badge me-2 text-danger"></i>{{ conductor.nombre_completo }}
+    {% if conductor.activo %}
+    <span class="badge bg-success ms-2">Activo</span>
+    {% else %}
+    <span class="badge bg-secondary ms-2">Inactivo</span>
+    {% endif %}
+  </h2>
+  <div class="d-flex gap-2">
+    <a href="{% url 'flota:editar_conductor' conductor.pk %}" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-pencil me-1"></i>Editar
+    </a>
+    <a href="{% url 'flota:eliminar_conductor' conductor.pk %}" class="btn btn-outline-danger btn-sm">
+      <i class="bi bi-trash me-1"></i>Eliminar
+    </a>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <table class="table table-sm table-borderless mb-0">
+          <tr><th class="text-muted" style="width:40%">Nombre completo</th><td><strong>{{ conductor.nombre_completo }}</strong></td></tr>
+          <tr><th class="text-muted">Cédula</th><td>{{ conductor.cedula }}</td></tr>
+          <tr><th class="text-muted">Licencia</th><td>{{ conductor.licencia }}</td></tr>
+          <tr><th class="text-muted">Turno</th><td>{{ conductor.get_turno_display }}</td></tr>
+          <tr><th class="text-muted">Teléfono</th><td>{{ conductor.telefono|default:"—" }}</td></tr>
+          <tr><th class="text-muted">Contratado</th><td>{{ conductor.fecha_contratacion|date:"d/m/Y" }}</td></tr>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-light border-0">
+          <div class="card-body">
+            <h6 class="card-title"><i class="bi bi-bus-front me-2 text-danger"></i>Bus Asignado</h6>
+            {% if conductor.bus_asignado %}
+            <table class="table table-sm table-borderless mb-0">
+              <tr><th class="text-muted">Placa</th><td><strong>{{ conductor.bus_asignado.placa }}</strong></td></tr>
+              <tr><th class="text-muted">N° Interno</th><td>{{ conductor.bus_asignado.numero_interno }}</td></tr>
+              <tr><th class="text-muted">Marca/Modelo</th><td>{{ conductor.bus_asignado.marca }} {{ conductor.bus_asignado.modelo }}</td></tr>
+              <tr><th class="text-muted">Estado</th>
+                <td><span class="badge bg-{{ conductor.bus_asignado.get_estado_badge }}">{{ conductor.bus_asignado.get_estado_display }}</span></td>
+              </tr>
+            </table>
+            <a href="{% url 'flota:detalle_bus' conductor.bus_asignado.pk %}" class="btn btn-sm btn-outline-secondary mt-2">
+              Ver bus
+            </a>
+            {% else %}
+            <p class="text-muted mb-0">Sin bus asignado.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

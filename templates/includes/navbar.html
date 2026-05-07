@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-danger">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/">Transmi Admin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'flota:lista_buses' %}">Flota</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'rutas:lista_rutas' %}">Rutas</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'estaciones:lista_estaciones' %}">Estaciones</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:lista_usuarios' %}">Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'mantenimiento:lista_ordenes' %}">Mantenimiento</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

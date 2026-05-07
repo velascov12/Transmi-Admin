@@ -1,0 +1,75 @@
+<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-white sidebar shadow-sm">
+  <div class="position-sticky pt-3">
+
+    <div class="px-3 mb-3">
+      <small class="text-muted text-uppercase fw-bold">Menú Principal</small>
+    </div>
+
+    <ul class="nav flex-column">
+
+      <li class="nav-item">
+        <a class="nav-link sidebar-link {% if request.resolver_match.app_name == 'flota' %}active{% endif %}"
+           href="{% url 'flota:lista_buses' %}">
+          <i class="bi bi-bus-front me-2"></i> Flota
+        </a>
+        {% if request.resolver_match.app_name == 'flota' %}
+        <ul class="nav flex-column ms-3 sidebar-submenu">
+          <li><a class="nav-link py-1" href="{% url 'flota:lista_buses' %}"><i class="bi bi-dot"></i> Buses</a></li>
+          <li><a class="nav-link py-1" href="{% url 'flota:lista_conductores' %}"><i class="bi bi-dot"></i> Conductores</a></li>
+          <li><a class="nav-link py-1" href="{% url 'flota:lista_tipos' %}"><i class="bi bi-dot"></i> Tipos de Bus</a></li>
+        </ul>
+        {% endif %}
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link sidebar-link {% if request.resolver_match.app_name == 'rutas' %}active{% endif %}"
+           href="{% url 'rutas:lista_rutas' %}">
+          <i class="bi bi-map me-2"></i> Rutas
+        </a>
+        {% if request.resolver_match.app_name == 'rutas' %}
+        <ul class="nav flex-column ms-3 sidebar-submenu">
+          <li><a class="nav-link py-1" href="{% url 'rutas:lista_rutas' %}"><i class="bi bi-dot"></i> Rutas</a></li>
+          <li><a class="nav-link py-1" href="{% url 'rutas:lista_portales' %}"><i class="bi bi-dot"></i> Portales</a></li>
+        </ul>
+        {% endif %}
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link sidebar-link {% if request.resolver_match.app_name == 'estaciones' %}active{% endif %}"
+           href="{% url 'estaciones:lista_estaciones' %}">
+          <i class="bi bi-geo-alt me-2"></i> Estaciones
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link sidebar-link {% if request.resolver_match.app_name == 'usuarios' %}active{% endif %}"
+           href="{% url 'usuarios:lista_usuarios' %}">
+          <i class="bi bi-credit-card me-2"></i> Usuarios Tullave
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link sidebar-link {% if request.resolver_match.app_name == 'mantenimiento' %}active{% endif %}"
+           href="{% url 'mantenimiento:lista_ordenes' %}">
+          <i class="bi bi-tools me-2"></i> Mantenimiento
+        </a>
+        {% if request.resolver_match.app_name == 'mantenimiento' %}
+        <ul class="nav flex-column ms-3 sidebar-submenu">
+          <li><a class="nav-link py-1" href="{% url 'mantenimiento:lista_ordenes' %}"><i class="bi bi-dot"></i> Órdenes</a></li>
+          <li><a class="nav-link py-1" href="{% url 'mantenimiento:lista_repuestos' %}"><i class="bi bi-dot"></i> Repuestos</a></li>
+        </ul>
+        {% endif %}
+      </li>
+
+    </ul>
+
+    <hr class="mx-3">
+    <div class="px-3">
+      <small class="text-muted">
+        <i class="bi bi-circle-fill text-success me-1" style="font-size:0.5rem"></i>
+        Sistema activo
+      </small>
+    </div>
+
+  </div>
+</nav>

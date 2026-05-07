@@ -1,0 +1,173 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estaciones Transmi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #f1c40f;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid #7f8c8d;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background-color: #34495e;
+            border-color: #ecf0f1;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .estacion-card {
+            background-color: #34495e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .estacion-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            background-color: #2980b9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header.cerrada {
+            background-color: #c0392b;
+        }
+
+        .estacion-nombre {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .status-badge {
+            font-size: 0.8em;
+            padding: 4px 8px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #465c72;
+            padding-bottom: 5px;
+        }
+
+        .info-label {
+            color: #95a5a6;
+            font-size: 0.9em;
+        }
+
+        .info-value {
+            font-weight: 500;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            background: #34495e;
+            border-radius: 10px;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Red de Estaciones</h1>
+        <div class="nav-links">
+            <a href="/estaciones/">Inicio</a>
+            <a href="/estaciones/lista">Lista Estaciones</a>
+            <a href="/estaciones/crear">Registrar Nueva</a>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        {% if estaciones %}
+        {% for estacion in estaciones %}
+        <div class="estacion-card">
+            <div class="card-header {% if not estacion.operativa %}cerrada{% endif %}">
+                <h2 class="estacion-nombre">{{ estacion.nombre }}</h2>
+                <span class="status-badge">
+                    {% if estacion.operativa %}Activa{% else %}Inactiva{% endif %}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <span class="info-label">Troncal</span>
+                    <span class="info-value">{{ estacion.troncal }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Cant. Vagones</span>
+                    <span class="info-value">{{ estacion.vagones }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            <h2>No hay estaciones registradas en el sistema</h2>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Transmi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #d32f2f;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .menu {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .menu a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .usuario-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .usuario-inactivo {
+            background-color: #ffebee;
+        }
+
+        .nombre {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .detalles {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .estado {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: white;
+            font-weight: bold;
+        }
+
+        .estado.activo {
+            background-color: #4caf50;
+        }
+
+        .estado.inactivo {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="menu">
+            <a href="/usuarios/">Home</a>
+            <a href="/usuarios/lista">Lista</a>
+            <a href="/usuarios/crear">Crear</a>
+        </div>
+
+        <h1>Usuarios Transmi</h1>
+
+        {% if usuarios %}
+        {% for usuario in usuarios %}
+        <div class="usuario-card {% if usuario.activo %}usuario-activo{% else %}usuario-inactivo{% endif %}">
+            <div>
+                <span class="nombre">{{ usuario.nombre }}</span>
+                <div class="detalles">{{ usuario.rol }} - {{ usuario.identificacion }}</div>
+            </div>
+            <div>
+                {% if usuario.activo %}
+                <span class="estado activo">Laborando</span>
+                {% else %}
+                <span class="estado inactivo">Inactivo</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No hay usuarios registrados.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Buses{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4>Buses</h4>
+  <a href="{% url 'flota:crear_bus' %}" class="btn btn-danger btn-sm">+ Nuevo</a>
+</div>
+
+<form method="get" class="mb-3 d-flex gap-2">
+  <input type="text" name="q" value="{{ q }}" class="form-control form-control-sm w-auto" placeholder="Buscar placa...">
+  <button type="submit" class="btn btn-secondary btn-sm">Buscar</button>
+  {% if q %}<a href="{% url 'flota:lista_buses' %}" class="btn btn-outline-secondary btn-sm">Limpiar</a>{% endif %}
+</form>
+
+<table class="table table-bordered table-sm bg-white">
+  <thead class="table-light">
+    <tr>
+      <th>N Interno</th>
+      <th>Placa</th>
+      <th>Tipo</th>
+      <th>Marca / Modelo</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for bus in buses %}
+    <tr>
+      <td>{{ bus.numero_interno }}</td>
+      <td>{{ bus.placa }}</td>
+      <td>{{ bus.tipo.nombre }}</td>
+      <td>{{ bus.marca }} {{ bus.modelo }}</td>
+      <td>{{ bus.get_estado_display }}</td>
+      <td>
+        <a href="{% url 'flota:editar_bus' bus.pk %}" class="btn btn-sm btn-outline-primary">Editar</a>
+        <a href="{% url 'flota:eliminar_bus' bus.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="text-center text-muted">No hay buses registrados.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{% url 'flota:lista_conductores' %}" class="text-secondary small">Ver conductores &rarr;</a>
+{% endblock %}

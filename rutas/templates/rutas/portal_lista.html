@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Portales{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4>Portales</h4>
+  <a href="{% url 'rutas:crear_portal' %}" class="btn btn-danger btn-sm">+ Nuevo</a>
+</div>
+
+<table class="table table-bordered table-sm bg-white">
+  <thead class="table-light">
+    <tr>
+      <th>Nombre</th>
+      <th>Localidad</th>
+      <th>Capacidad</th>
+      <th>Activo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for portal in portales %}
+    <tr>
+      <td>{{ portal.nombre }}</td>
+      <td>{{ portal.localidad }}</td>
+      <td>{{ portal.capacidad_buses }}</td>
+      <td>{% if portal.activo %}Si{% else %}No{% endif %}</td>
+      <td>
+        <a href="{% url 'rutas:editar_portal' portal.pk %}" class="btn btn-sm btn-outline-primary">Editar</a>
+        <a href="{% url 'rutas:eliminar_portal' portal.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center text-muted">No hay portales registrados.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{% url 'rutas:lista_rutas' %}" class="text-secondary small">&larr; Ver rutas</a>
+{% endblock %}

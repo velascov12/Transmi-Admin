@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'usuarios:lista_usuarios' %}">Usuarios</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'usuarios:lista_tipos' %}">Tipos</a></li>
+    <li class="breadcrumb-item active">{{ accion }}</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="page-header"><h2 class="h4 mb-0"><i class="bi bi-tags me-2 text-danger"></i>{{ titulo }}</h2></div>
+<div class="card form-card shadow-sm" style="max-width:500px">
+  <div class="card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="mb-3"><label class="form-label">Nombre *</label>{{ form.nombre }}{% if form.nombre.errors %}<div class="text-danger small mt-1">{{ form.nombre.errors.0 }}</div>{% endif %}</div>
+      <div class="mb-3"><label class="form-label">Descuento (%) *</label>{{ form.descuento_porcentaje }}{% if form.descuento_porcentaje.errors %}<div class="text-danger small mt-1">{{ form.descuento_porcentaje.errors.0 }}</div>{% endif %}</div>
+      <div class="mb-3"><label class="form-label">Descripción</label>{{ form.descripcion }}</div>
+      <hr>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-1"></i>{{ accion }}</button>
+        <a href="{% url 'usuarios:lista_tipos' %}" class="btn btn-outline-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
